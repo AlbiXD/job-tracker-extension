@@ -1,26 +1,32 @@
+body {
+    caret-color: transparent; 
+  }
+  
 .container{
-    width: 500px;
-    height: 300px;
+    width: 400px;
+    height: 200px;
+    display: flex;
+    flex-direction: row;
+    border: none;
+
+}
+
+.top{
     display: flex;
     flex-direction: column;
-    justify-content: end;
-
-}
-
-.button_container{
-
-    display: flex;
-    justify-content: center;
     width: 100%;
-
 }
 
-.button{
-    background-color: #007BFF;
-    color: white;
-    width: 45%;
+.cross_button{
+    background-color: transparent;
     border: none;
-    height: 40px;
-    border-radius: 5px;
+    align-self: flex-end;
     font-size: 1.2rem;
+    color: #4A5568;
+    width: fit-content;
+    padding: 0;
+
 }
+.cross_button:hover {
+    color: #718096;
+  }
