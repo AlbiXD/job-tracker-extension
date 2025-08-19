@@ -2,16 +2,23 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from bs4 import BeautifulSoup
 from contextlib import asynccontextmanager
+from pymongo import AsyncMongoClient
+from urllib.parse import quote_plus
 
-import requests
-import pymongo
+username = ""
+password = quote_plus("")  
 
 
-app = FastAPI()
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    client = AsyncMongoClient(uri)
+    global db
+    db = client['jobs']
     yield
+    await client.close()
+
+app = FastAPI(lifespan=lifespan)
 
 class Job(BaseModel):
     name: str
@@ -19,7 +26,7 @@ class Job(BaseModel):
     html: str
 
 @app.post("/jobs")
-def create_job(payload: Job):
+async def create_job(payload: Job):
 
     job_data = {} 
 
@@ -39,8 +46,6 @@ def create_job(payload: Job):
 
 
 def linkedin_parser(url):
-    response = requests.get("https://www.linkedin.com/jobs/collections/recommended/?currentJobId=4285084575")
-    soup = BeautifulSoup(response, "html.parser")
     return
 
 def indeed_parser(url):
