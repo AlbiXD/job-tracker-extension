@@ -6,8 +6,8 @@ from pymongo import AsyncMongoClient
 from urllib.parse import quote_plus
 from fastapi.middleware.cors import CORSMiddleware
 
-username = ""
-password = quote_plus("")  
+username = "Cluster95580"
+password = quote_plus("erion010")  
 
 uri = f"mongodb+srv://{username}:{password}@cluster95580.jrijbax.mongodb.net/?retryWrites=true&w=majority&appName=Cluster95580"
 
@@ -21,12 +21,17 @@ async def lifespan(app: FastAPI):
     await client.close()
 
 app = FastAPI(lifespan=lifespan)
+EXT_ID = "mllgnkkjaoneilfbljceabimcolalkod"  # your real ID
 app.add_middleware(
     CORSMiddleware,
-    allow_origin_regex=r"^https:\/\/.*linkedin\.com$",  # or ["https://www.linkedin.com"]
-    allow_methods=["GET","POST","OPTIONS"],
+    allow_origins=[
+        f"chrome-extension://{EXT_ID}",
+        "https://www.linkedin.com",
+        "https://www.linkedin.com/",
+    ],
+    allow_methods=["*"],
     allow_headers=["*"],
-    allow_credentials=False,  # keep false unless you truly need cookies
+    allow_credentials=False,
 )
 
 class Payload(BaseModel):
@@ -64,12 +69,14 @@ async def create_job(job: Job):
     #TO BE IMPLEMENTED
     col = db["jobs"]
     result = await col.insert_one(job.model_dump())
+    print(job, "has been stored")
     return job
 
 def linkedin_parser(html, id):
     soup = BeautifulSoup(html, "html.parser")
-    job_name = soup.body.h1.text.strip() 
-    
+    h1 = soup.body.find("h1") if soup.body else None
+    job_name = h1.get_text(strip=True) if h1 else None
+
     #Company Name Check
     company = soup.body.find(class_="job-details-jobs-unified-top-card__company-name")
     company = company.a.get_text(strip=True) if (company and company.a) else None
