@@ -1,14 +1,31 @@
-button {
-  background-color: #4DA6FF; 
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 6px;
+/* 3. Border Reveal */
+.btn-border-reveal {
+  background-color: transparent;
+  color: #3498db; /* light blue text */
+  border: 3px solid #3498db; /* thicker border */
+  position: relative;
+  padding: 15px 40px; /* bigger button */
+  font-size: 18px; /* larger text */
+  border-radius: 6px; /* optional: rounded edges */
   cursor: pointer;
-  font-size: 1.2rem;
-
 }
 
-button:hover {
-  background-color: #3399FF; 
+.btn-border-reveal::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: #3498db; /* light blue background on hover */
+  transition: width 0.3s ease;
+  z-index: -1;
+}
+
+.btn-border-reveal:hover::after {
+  width: 100%;
+}
+
+.btn-border-reveal:hover {
+  color: white;
 }
