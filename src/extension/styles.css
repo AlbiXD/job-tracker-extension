@@ -9,7 +9,16 @@
   border-radius: 6px; /* optional: rounded edges */
   cursor: pointer;
 }
-
+.btn-border-saved {
+  background-color: transparent;
+  color: white; /* light blue text */
+  border: 3px solid green; /* thicker border */
+  position: relative;
+  padding: 15px 40px; /* bigger button */
+  font-size: 18px; /* larger text */
+  border-radius: 6px; /* optional: rounded edges */
+  cursor: pointer;
+}
 .btn-border-reveal::after {
   content: "";
   position: absolute;

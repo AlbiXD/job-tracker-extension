@@ -4,12 +4,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const { saved } = await chrome.storage.local.get("saved");
   if (saved) {
-    btn.innerText = "Saved Already";
-    console.log(saved)
+    btn.textContent = "Saved!";
+    btn.style.backgroundColor = "green";
+    btn.style.border = "none";
+    btn.style.outline = "none";
+    btn.style.boxShadow = "none";
+    btn.classList.remove("btn-border-reveal"); // kill the hover/reveal effect
+    btn.classList.add("btn-border-saved")
     await chrome.storage.local.remove("saved");
     return;
   }
-
 
   btn.addEventListener("click", async () => {
     try {
@@ -38,6 +42,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         btn.style.border = "none";
         btn.style.outline = "none";
         btn.style.boxShadow = "none";
+        btn.classList.remove("btn-border-reveal"); // kill the hover/reveal effect
+        btn.classList.add("btn-border-saved");             // your solid success style
 
         console.log(saved);
       } catch (err) {

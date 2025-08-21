@@ -10,7 +10,7 @@ chrome.runtime.onMessage.addListener((msg) => {
 
     const mutationObserver = new MutationObserver(async (mutations, obs) => {
         const parentNow = document.querySelector('.jobs-search__job-details--wrapper');
-        const hasTitle = parentNow && parentNow.querySelector('a, a');
+        const hasTitle = parentNow && parentNow.querySelector('a, a ');
         console.log(mutations)
         if (!hasTitle) return;          // wait until real content exists
         obs.disconnect();               // <- CALL it (use obs arg)
@@ -32,6 +32,8 @@ chrome.runtime.onMessage.addListener((msg) => {
 
 
 async function send(id) {
+    chrome.storage.local.remove("saved")
+    
     if (!id) return;
     if (lastId === id) return
 
